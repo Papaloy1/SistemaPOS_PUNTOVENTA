@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="SistemaPOS.GVG.API/SistemaPOS.GVG.API.csproj" />
+  <Project Path="SistemaPOS.GVG/SistemaPOS.GVG.csproj" />
+</Solution>
