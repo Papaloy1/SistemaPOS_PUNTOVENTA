@@ -1,30 +1,14 @@
 ﻿using System.Windows;
-using SistemaPOS.Desktop.Views; // Importamos la carpeta de vistas
+using System.Windows.Controls;
+using SistemaPOS.Desktop.Views;
 
-namespace SistemaPOS.Desktop
+namespace SistemaPOS.Desktop.Views
 {
-    public partial class DashboardWindow : Window
+    public partial class VentasView : UserControl
     {
-        public DashboardWindow()
+        public VentasView()
         {
             InitializeComponent();
-
-            // Cargar la vista de inicio por defecto (si la creas)
-            // AreaTrabajoMain.Content = new InicioView();
-        }
-
-        // Evento de navegación: Módulo de Inventario
-        private void BtnMenuInventario_Click(object sender, RoutedEventArgs e)
-        {
-            // Limpia el panel e inyecta la interfaz de inventario
-            AreaTrabajoMain.Content = new InventarioView();
-        }
-
-        // Evento de navegación: Módulo de Ventas
-        private void BtnMenuVentas_Click(object sender, RoutedEventArgs e)
-        {
-            // Limpia el panel e inyecta la interfaz de punto de venta
-            AreaTrabajoMain.Content = new VentasView();
         }
     }
 }
