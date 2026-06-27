@@ -30,20 +30,22 @@ namespace SistemaPOS.GVG.API.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdProducto"));
 
                     b.Property<string>("Acabado")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("Categoria")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("CodigoBarras")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("Descripcion")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<decimal>("PrecioCosto")
                         .HasColumnType("decimal(18,2)");
@@ -51,9 +53,12 @@ namespace SistemaPOS.GVG.API.Migrations
                     b.Property<decimal>("PrecioVenta")
                         .HasColumnType("decimal(18,2)");
 
+                    b.Property<decimal>("Stock")
+                        .HasColumnType("decimal(18,2)");
+
                     b.Property<string>("Tamanio")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.HasKey("IdProducto");
 
