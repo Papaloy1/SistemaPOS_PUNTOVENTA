@@ -13,7 +13,7 @@ namespace SistemaPOS.Desktop
         // Navegación al módulo de Inventario
         private void BtnMenuInventario_Click(object sender, RoutedEventArgs e)
         {
-            AreaTrabajoMain.Content = new InventarioView();
+            AreaTrabajoMain.Content = new ProductosView();
         }
 
         // Navegación al módulo de Ventas
