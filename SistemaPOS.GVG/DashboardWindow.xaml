@@ -15,12 +15,13 @@
             <StackPanel Margin="0,20,0,0">
                 <TextBlock Text="Menú Principal" Foreground="Gray" FontSize="12" Margin="15,0,0,10" FontWeight="SemiBold"/>
 
-                <Button x:Name="btnMenuInicio" Content="🏠 Inicio" Height="45" Background="#E5A93A" Foreground="Black" FontWeight="Bold" HorizontalContentAlignment="Left" Padding="20,0,0,0" BorderThickness="0" Margin="0,5,0,0"/>
+                <Button x:Name="btnMenuInicio" Content="🏠 Inicio" Height="45" Background="#E5A93A" Foreground="Black" FontWeight="Bold" HorizontalContentAlignment="Left" Padding="20,0,0,0" BorderThickness="0" Margin="0,5,0,0" Click="BtnMenuInicio_Click"/>
                 <Button x:Name="btnMenuVentas" Content="🛒 Ventas" Click="btnMenuVentas_Click" Height="45" Background="Transparent" Foreground="White" HorizontalContentAlignment="Left" Padding="20,0,0,0" BorderThickness="0"/>
                 <Button x:Name="btnMenuInventario" Content="📋 Inventario" Click="BtnMenuInventario_Click" Height="45" Background="Transparent" Foreground="White" HorizontalContentAlignment="Left" Padding="20,0,0,0" BorderThickness="0"/>
+                <Button x:Name="btnMenuClientes" Content="👥 Clientes" Click="BtnMenuClientes_Click" Height="45" Background="Transparent" Foreground="White" HorizontalContentAlignment="Left" Padding="20,0,0,0" BorderThickness="0"/>
 
                 <TextBlock Text="Administración" Foreground="Gray" FontSize="12" Margin="15,20,0,10" FontWeight="SemiBold"/>
-                <Button x:Name="btnMenuCaja" Content="💵 Caja" Height="45" Background="Transparent" Foreground="White" HorizontalContentAlignment="Left" Padding="20,0,0,0" BorderThickness="0"/>
+                <Button x:Name="btnMenuCaja" Content="💵 Caja" Height="45" Background="Transparent" Foreground="White" HorizontalContentAlignment="Left" Padding="20,0,0,0" BorderThickness="0" Click="BtnMenuCaja_Click"/>
             </StackPanel>
         </Border>
 
