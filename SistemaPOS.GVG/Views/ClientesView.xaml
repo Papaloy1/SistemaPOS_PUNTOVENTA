@@ -1,0 +1,91 @@
+﻿<UserControl x:Class="SistemaPOS.Desktop.Views.ClientesView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             Background="#F8F9FA"
+             Loaded="UserControl_Loaded">
+
+    <UserControl.Resources>
+        <DropShadowEffect x:Key="ShadowEffect" BlurRadius="8" ShadowDepth="2" Opacity="0.15"/>
+    </UserControl.Resources>
+
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Encabezado -->
+        <StackPanel Grid.Row="0" Margin="0,0,0,20">
+            <TextBlock Text="👥 Gestión de Clientes" FontSize="32" FontWeight="Bold" Foreground="#1a1a1a"/>
+            <TextBlock x:Name="lblClienteCount" Text="Cargando clientes..." FontSize="14" Foreground="#666666" Margin="0,8,0,0"/>
+        </StackPanel>
+
+        <!-- Barra de búsqueda y filtros -->
+        <Border Grid.Row="1" Background="White" Padding="15" Margin="0,0,0,20" Effect="{StaticResource ShadowEffect}">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- Búsqueda -->
+                <StackPanel Grid.Column="0" Orientation="Horizontal">
+                    <TextBox x:Name="txtBusqueda" Width="300" Height="40" Padding="12,0" 
+                             VerticalContentAlignment="Center" FontSize="14"
+                             Foreground="#333333" BorderThickness="1" BorderBrush="#E0E0E0"/>
+
+                    <Button x:Name="btnBuscar" Content="🔍 Buscar" 
+                            Width="100" Height="40" Margin="10,0,0,0"
+                            Background="#1A73E8" Foreground="White" 
+                            FontWeight="Bold" BorderThickness="0"
+                            Click="BtnBuscar_Click"/>
+                </StackPanel>
+
+                <!-- Botones de acción -->
+                <StackPanel Grid.Column="1" Orientation="Horizontal" Margin="20,0,0,0">
+                    <Button x:Name="btnNuevo" Content="➕ Nuevo Cliente" 
+                            Height="40" Padding="15,0"
+                            Background="#28A745" Foreground="White" 
+                            FontWeight="Bold" BorderThickness="0"
+                            Click="BtnNuevo_Click"/>
+                </StackPanel>
+
+                <!-- Actualizar -->
+                <Button Grid.Column="2" Content="🔄 Actualizar" 
+                        Height="40" Padding="15,0" Margin="10,0,0,0"
+                        Background="#6C757D" Foreground="White" 
+                        FontWeight="Bold" BorderThickness="0"
+                        Click="BtnActualizar_Click"/>
+            </Grid>
+        </Border>
+
+        <!-- DataGrid de Clientes -->
+        <Border Grid.Row="2" Background="White" Effect="{StaticResource ShadowEffect}">
+            <DataGrid x:Name="dgClientes" AutoGenerateColumns="False" CanUserAddRows="False">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="ID" Binding="{Binding IdCliente}" Width="50" IsReadOnly="True"/>
+                    <DataGridTextColumn Header="Nombre" Binding="{Binding Nombre}" Width="*" IsReadOnly="True"/>
+                    <DataGridTextColumn Header="Teléfono" Binding="{Binding Telefono}" Width="120" IsReadOnly="True"/>
+                    <DataGridTextColumn Header="Correo" Binding="{Binding Correo}" Width="200" IsReadOnly="True"/>
+                    <DataGridTextColumn Header="Saldo Crédito" Binding="{Binding SaldoCredito, StringFormat='${0:F2}'}" Width="120" IsReadOnly="True"/>
+                    <DataGridTemplateColumn Header="Acciones" Width="150">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <Button Content="✏️ Editar" Padding="8,4" 
+                                            Background="#FFC107" Foreground="White" 
+                                            FontWeight="Bold" BorderThickness="0" Margin="0,0,5,0"/>
+                                    <Button Content="🗑️ Eliminar" Padding="8,4" 
+                                            Background="#DC3545" Foreground="White" 
+                                            FontWeight="Bold" BorderThickness="0"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Border>
+    </Grid>
+</UserControl>

@@ -8,14 +8,20 @@ namespace SistemaPOS.API.Models
         [Key]
         public int IdProducto { get; set; }
 
-        public string CodigoBarras { get; set; }
+        [Required]
+        public required string CodigoBarras { get; set; }
 
         [Required]
-        public string Descripcion { get; set; }
+        public required string Descripcion { get; set; }
 
-        public string Categoria { get; set; }
-        public string Acabado { get; set; }
-        public string Tamanio { get; set; }
+        [Required]
+        public required string Categoria { get; set; }
+
+        [Required]
+        public required string Acabado { get; set; }
+
+        [Required]
+        public required string Tamanio { get; set; }
 
         [Column(TypeName = "decimal(18,2)")]
         public decimal PrecioCosto { get; set; }

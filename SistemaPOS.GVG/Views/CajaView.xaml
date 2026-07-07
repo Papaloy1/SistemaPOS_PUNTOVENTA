@@ -1,0 +1,98 @@
+﻿<UserControl x:Class="SistemaPOS.Desktop.Views.CajaView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             Background="#F8F9FA"
+             Loaded="UserControl_Loaded">
+
+    <UserControl.Resources>
+        <DropShadowEffect x:Key="ShadowEffect" BlurRadius="8" ShadowDepth="2" Opacity="0.15"/>
+    </UserControl.Resources>
+
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Encabezado -->
+        <StackPanel Grid.Row="0" Margin="0,0,0,20">
+            <TextBlock Text="💵 Gestión de Caja" FontSize="32" FontWeight="Bold" Foreground="#1a1a1a"/>
+            <TextBlock x:Name="lblEstado" Text="Verificando estado de caja..." FontSize="14" Foreground="#666666" Margin="0,8,0,0"/>
+        </StackPanel>
+
+        <!-- Tarjeta de Estado de Caja Activa -->
+        <Border Grid.Row="1" Background="#E8F5E9" Padding="20" Margin="0,0,0,20" 
+                BorderBrush="#4CAF50" BorderThickness="2" Effect="{StaticResource ShadowEffect}">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.Column="0">
+                    <TextBlock Text="CAJA ACTIVA" FontSize="20" FontWeight="Bold" Foreground="#2E7D32"/>
+                    <Grid Margin="0,10,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="200"/>
+                            <ColumnDefinition Width="200"/>
+                            <ColumnDefinition Width="200"/>
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel Grid.Column="0">
+                            <TextBlock Text="Saldo Inicial" FontSize="12" Foreground="#666666"/>
+                            <TextBlock x:Name="lblSaldoInicial" Text="$0.00" FontSize="18" FontWeight="Bold" Foreground="#1a1a1a"/>
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="1">
+                            <TextBlock Text="Total Ventas" FontSize="12" Foreground="#666666"/>
+                            <TextBlock x:Name="lblTotalVentas" Text="$0.00" FontSize="18" FontWeight="Bold" Foreground="#1a1a1a"/>
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="2">
+                            <TextBlock Text="Saldo en Caja" FontSize="12" Foreground="#666666"/>
+                            <TextBlock x:Name="lblSaldoActual" Text="$0.00" FontSize="18" FontWeight="Bold" Foreground="#2E7D32"/>
+                        </StackPanel>
+                    </Grid>
+                </StackPanel>
+
+                <StackPanel Grid.Column="2" Orientation="Horizontal" Margin="20,0,0,0">
+                    <Button x:Name="btnAbrirCaja" Content="🔓 Abrir Caja" Height="50" Padding="20,0"
+                            Background="#4CAF50" Foreground="White" FontWeight="Bold" BorderThickness="0"
+                            Margin="0,0,10,0" Click="BtnAbrirCaja_Click"/>
+
+                    <Button x:Name="btnCerrarCaja" Content="🔒 Cerrar Caja" Height="50" Padding="20,0"
+                            Background="#F44336" Foreground="White" FontWeight="Bold" BorderThickness="0"
+                            Click="BtnCerrarCaja_Click"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <!-- DataGrid de Cajas -->
+        <Border Grid.Row="2" Background="White" Effect="{StaticResource ShadowEffect}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <TextBlock Grid.Row="0" Text="Historial de Cajas" FontSize="16" FontWeight="Bold" 
+                           Foreground="#1a1a1a" Padding="15,15,15,10"/>
+
+                <DataGrid Grid.Row="1" x:Name="dgCajas" AutoGenerateColumns="False" CanUserAddRows="False">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="ID" Binding="{Binding IdCaja}" Width="50" IsReadOnly="True"/>
+                        <DataGridTextColumn Header="Nombre" Binding="{Binding NombreCaja}" Width="150" IsReadOnly="True"/>
+                        <DataGridTextColumn Header="Ubicación" Binding="{Binding Ubicacion}" Width="150" IsReadOnly="True"/>
+                        <DataGridTextColumn Header="Saldo Inicial" Binding="{Binding SaldoInicial, StringFormat='${0:F2}'}" Width="120" IsReadOnly="True"/>
+                        <DataGridTextColumn Header="Total Ventas" Binding="{Binding TotalVentas, StringFormat='${0:F2}'}" Width="120" IsReadOnly="True"/>
+                        <DataGridTextColumn Header="Saldo Final" Binding="{Binding SaldoFinal, StringFormat='${0:F2}'}" Width="120" IsReadOnly="True"/>
+                        <DataGridTextColumn Header="Estado" Binding="{Binding Estado}" Width="100" IsReadOnly="True"/>
+                        <DataGridTextColumn Header="Apertura" Binding="{Binding FechaApertura, StringFormat='dd/MM/yyyy HH:mm'}" Width="150" IsReadOnly="True"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Grid>
+        </Border>
+    </Grid>
+</UserControl>

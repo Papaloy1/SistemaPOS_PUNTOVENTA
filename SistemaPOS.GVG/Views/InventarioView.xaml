@@ -11,7 +11,6 @@
         <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,15">
             <TextBox Width="300" Height="30" VerticalContentAlignment="Center" Padding="5,0"/>
             <Button Content="🔍 Buscar" Width="80" Margin="10,0,0,0" Background="#F0F0F0" BorderThickness="0"/>
-            <Button Content="+ Nuevo Artículo" Width="120" Margin="10,0,0,0" Background="#1A73E8" Foreground="White" FontWeight="Bold" BorderThickness="0"/>
         </StackPanel>
 
         <DataGrid x:Name="dgInventario" Grid.Row="1" AutoGenerateColumns="False" 
