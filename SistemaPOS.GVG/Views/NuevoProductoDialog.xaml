@@ -1,0 +1,75 @@
+﻿<Window x:Class="SistemaPOS.Desktop.Views.Dialogs.NuevoProductoDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Nuevo Producto" Height="500" Width="600" 
+        WindowStartupLocation="CenterOwner" ResizeMode="NoResize"
+        Background="#F5F5F5" WindowStyle="SingleBorderWindow">
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Título -->
+        <TextBlock Grid.Row="0" Text="Registrar Nuevo Producto" FontSize="18" FontWeight="Bold" Margin="0,0,0,20"/>
+
+        <!-- Formulario -->
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <!-- Código de Barras -->
+                <TextBlock Grid.Row="0" Grid.Column="0" Text="Código de Barras:" FontWeight="Bold" Margin="0,0,0,5"/>
+                <TextBox x:Name="TxtCodigoBarras" Grid.Row="0" Grid.Column="0" Margin="0,25,10,15" Height="35" Padding="10"/>
+
+                <!-- Descripción -->
+                <TextBlock Grid.Row="0" Grid.Column="1" Text="Descripción:" FontWeight="Bold" Margin="0,0,0,5"/>
+                <TextBox x:Name="TxtDescripcion" Grid.Row="0" Grid.Column="1" Margin="10,25,0,15" Height="35" Padding="10"/>
+
+                <!-- Categoría -->
+                <TextBlock Grid.Row="1" Grid.Column="0" Text="Categoría:" FontWeight="Bold" Margin="0,0,0,5"/>
+                <TextBox x:Name="TxtCategoria" Grid.Row="1" Grid.Column="0" Margin="0,25,10,15" Height="35" Padding="10"/>
+
+                <!-- Acabado -->
+                <TextBlock Grid.Row="1" Grid.Column="1" Text="Acabado:" FontWeight="Bold" Margin="0,0,0,5"/>
+                <TextBox x:Name="TxtAcabado" Grid.Row="1" Grid.Column="1" Margin="10,25,0,15" Height="35" Padding="10"/>
+
+                <!-- Tamaño -->
+                <TextBlock Grid.Row="2" Grid.Column="0" Text="Tamaño:" FontWeight="Bold" Margin="0,0,0,5"/>
+                <TextBox x:Name="TxtTamanio" Grid.Row="2" Grid.Column="0" Margin="0,25,10,15" Height="35" Padding="10"/>
+
+                <!-- Stock -->
+                <TextBlock Grid.Row="2" Grid.Column="1" Text="Stock:" FontWeight="Bold" Margin="0,0,0,5"/>
+                <TextBox x:Name="TxtStock" Grid.Row="2" Grid.Column="1" Margin="10,25,0,15" Height="35" Padding="10" PreviewTextInput="NumeroInput_PreviewTextInput"/>
+
+                <!-- Precio Costo -->
+                <TextBlock Grid.Row="3" Grid.Column="0" Text="Precio Costo ($):" FontWeight="Bold" Margin="0,0,0,5"/>
+                <TextBox x:Name="TxtPrecioCosto" Grid.Row="3" Grid.Column="0" Margin="0,25,10,15" Height="35" Padding="10" PreviewTextInput="NumeroInput_PreviewTextInput"/>
+
+                <!-- Precio Venta -->
+                <TextBlock Grid.Row="3" Grid.Column="1" Text="Precio Venta ($):" FontWeight="Bold" Margin="0,0,0,5"/>
+                <TextBox x:Name="TxtPrecioVenta" Grid.Row="3" Grid.Column="1" Margin="10,25,0,15" Height="35" Padding="10" PreviewTextInput="NumeroInput_PreviewTextInput"/>
+            </Grid>
+        </ScrollViewer>
+
+        <!-- Botones -->
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,20,0,0">
+            <Button Content="Cancelar" Width="100" Height="40" Margin="0,0,10,0" Background="#E0E0E0" Click="BtnCancelar_Click"/>
+            <Button Content="✓ Guardar" Width="100" Height="40" Background="#1A73E8" Foreground="White" FontWeight="Bold" Click="BtnGuardar_Click"/>
+        </StackPanel>
+    </Grid>
+</Window>

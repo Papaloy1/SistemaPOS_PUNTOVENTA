@@ -8,7 +8,7 @@ namespace SistemaPOS.Desktop.Services
     public class ApiClient
     {
         private readonly HttpClient _httpClient;
-        
+
         // Puerto sincronizado con launchSettings.json (5275)
         private readonly string _baseUrl = "http://localhost:5275/api/";
 
@@ -18,7 +18,7 @@ namespace SistemaPOS.Desktop.Services
             _httpClient.BaseAddress = new Uri(_baseUrl);
             _httpClient.Timeout = TimeSpan.FromSeconds(30);
         }
-        
+
         // Método genérico para consultar datos (Ej. Listar inventario)
         public async Task<T> GetAsync<T>(string endpoint)
         {

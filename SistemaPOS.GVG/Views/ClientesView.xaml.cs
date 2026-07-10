@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
@@ -48,7 +48,7 @@ namespace SistemaPOS.Desktop.Views
             catch (Exception ex)
             {
                 lblClienteCount.Text = $"❌ Error al cargar clientes";
-                MessageBox.Show($"Error: {ex.Message}", "Error de Conexión", 
+                MessageBox.Show($"Error: {ex.Message}", "Error de Conexión",
                     MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }

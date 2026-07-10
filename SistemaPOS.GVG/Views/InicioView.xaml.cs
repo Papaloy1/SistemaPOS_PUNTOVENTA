@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
@@ -57,7 +57,7 @@ namespace SistemaPOS.Desktop.Views
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error al cargar datos: {ex.Message}", "Error", 
+                MessageBox.Show($"Error al cargar datos: {ex.Message}", "Error",
                     MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }

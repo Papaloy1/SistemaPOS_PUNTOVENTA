@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
@@ -127,7 +127,7 @@ namespace SistemaPOS.Desktop.Views
                     return;
                 }
 
-                MessageBox.Show($"Caja '{txtNombre.Text}' abierta con saldo inicial de ${saldoInicial:F2}", 
+                MessageBox.Show($"Caja '{txtNombre.Text}' abierta con saldo inicial de ${saldoInicial:F2}",
                     "Éxito", MessageBoxButton.OK, MessageBoxImage.Information);
 
                 ventana.Close();

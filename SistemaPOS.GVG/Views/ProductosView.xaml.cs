@@ -1,10 +1,11 @@
+using SistemaPOS.Desktop.Models;
+using SistemaPOS.Desktop.Services;
+using SistemaPOS.Desktop.Views.Dialogs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using SistemaPOS.Desktop.Services;
-using SistemaPOS.Desktop.Models;
 
 namespace SistemaPOS.Desktop.Views
 {
@@ -97,11 +98,99 @@ namespace SistemaPOS.Desktop.Views
         // Agregar nuevo producto
         private void BtnNuevo_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show(
-                "Funcionalidad de crear nuevo producto próximamente.",
-                "Información",
-                MessageBoxButton.OK,
-                MessageBoxImage.Information);
+            // Crear la ventana de diálogo
+            var dialogWindow = new NuevoProductoDialog();
+
+            // Mostrar como ventana modal
+            if (dialogWindow.ShowDialog() == true)
+            {
+                // Si se guardó exitosamente, recargar la tabla
+                _ = CargarProductos();
+            }
+        }
+
+        // Editar producto
+        private void BtnEditar_Click(object sender, RoutedEventArgs e)
+        {
+            var button = sender as Button;
+            var producto = button?.Tag as ProductoDTO;
+
+            if (producto == null)
+            {
+                MessageBox.Show("No se pudo cargar el producto", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            // Abrir diálogo de edición pasando el producto
+            var dialogWindow = new NuevoProductoDialog(producto);  // Usa NuevoProductoDialog reutilizable
+
+            if (dialogWindow.ShowDialog() == true)
+            {
+                // Si se guardó exitosamente, recargar la tabla
+                _ = CargarProductos();
+            }
+        }
+
+        // Eliminar producto
+        private void BtnEliminar_Click(object sender, RoutedEventArgs e)
+        {
+            var button = sender as Button;
+            var producto = button?.Tag as ProductoDTO;
+
+            if (producto == null)
+            {
+                MessageBox.Show("No se pudo cargar el producto", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            // Confirmar eliminación
+            var resultado = MessageBox.Show(
+                $"¿Estás seguro de que deseas eliminar el producto:\n\n{producto.Descripcion}?",
+                "Confirmar Eliminación",
+                MessageBoxButton.YesNo,
+                MessageBoxImage.Warning);
+
+            if (resultado == MessageBoxResult.Yes)
+            {
+                _ = EliminarProducto(producto.IdProducto);
+            }
+        }
+
+        // Eliminar producto desde la API
+        private async System.Threading.Tasks.Task EliminarProducto(int idProducto)
+        {
+            try
+            {
+                var success = await _apiClient.DeleteAsync("productos", idProducto);
+
+                if (success)
+                {
+                    MessageBox.Show(
+                        "Producto eliminado correctamente",
+                        "Éxito",
+                        MessageBoxButton.OK,
+                        MessageBoxImage.Information);
+
+                    // Recargar la lista
+                    _ = CargarProductos();
+                }
+                else
+                {
+                    MessageBox.Show(
+                        "Error al eliminar el producto",
+                        "Fallo",
+                        MessageBoxButton.OK,
+                        MessageBoxImage.Error);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    $"Error al eliminar el producto:\n{ex.Message}",
+                    "Error",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Error);
+            }
         }
     }
 }

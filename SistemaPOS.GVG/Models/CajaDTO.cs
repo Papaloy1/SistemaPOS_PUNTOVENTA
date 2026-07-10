@@ -1,4 +1,4 @@
-namespace SistemaPOS.Desktop.Models
+﻿namespace SistemaPOS.Desktop.Models
 {
     public class CajaDTO
     {
