@@ -1,122 +1,117 @@
 ﻿using System;
+using System.Net.Http;
+using System.Text;
 using System.Text.Json;
 using System.Windows;
-using System.Windows.Input;
+using System.Windows.Controls;
 using SistemaPOS.Desktop.Models;
-using SistemaPOS.Desktop.Services;
 
-namespace SistemaPOS.Desktop.Views.Dialogs
+namespace SistemaPOS.GVG.Views
 {
     public partial class NuevoProductoDialog : Window
     {
-        private readonly ApiClient _apiClient;
-        private ProductoDTO _productoEnEdicion;  // Guardar el producto en edición
-        public ProductoDTO ProductoCreado { get; set; }
+        private ProductoDTO _productoEdicion;
 
-        // Constructor para crear nuevo producto
         public NuevoProductoDialog()
         {
             InitializeComponent();
-            _apiClient = new ApiClient();
-            _productoEnEdicion = null;
-            this.Title = "➕ Nuevo Producto";
+            _productoEdicion = null;
         }
 
-        // Constructor para editar producto existente
         public NuevoProductoDialog(ProductoDTO producto)
         {
             InitializeComponent();
-            _apiClient = new ApiClient();
-            _productoEnEdicion = producto;
-            this.Title = "✏️ Editar Producto";
-            CargarProductoEnFormulario(producto);
+            _productoEdicion = producto;
+            CargarDatos(producto);
         }
 
-        // Cargar datos del producto en el formulario
-        private void CargarProductoEnFormulario(ProductoDTO producto)
+        private void CargarDatos(ProductoDTO producto)
         {
-            TxtCodigoBarras.Text = producto.CodigoBarras;
-            TxtDescripcion.Text = producto.Descripcion;
-            TxtCategoria.Text = producto.Categoria;
-            TxtAcabado.Text = producto.Acabado;
-            TxtTamanio.Text = producto.Tamanio;
-            TxtStock.Text = producto.Stock.ToString();
-            TxtPrecioCosto.Text = producto.PrecioCosto.ToString();
-            TxtPrecioVenta.Text = producto.PrecioVenta.ToString();
+            // Cargar los datos del producto en los campos de edición
+            txtCodigoBarras.Text = producto.CodigoBarras;
+            txtDescripcion.Text = producto.Descripcion;
+            txtPrecioCosto.Text = producto.PrecioCosto.ToString();
+            txtPrecioVenta.Text = producto.PrecioVenta.ToString();
+
+            // Si existe un campo de categoría, también cargarlo
+            if (!string.IsNullOrEmpty(producto.Categoria))
+            {
+                foreach (ComboBoxItem item in cmbCategoria.Items)
+                {
+                    if (item.Content.ToString() == producto.Categoria)
+                    {
+                        cmbCategoria.SelectedItem = item;
+                        break;
+                    }
+                }
+            }
         }
 
-        private async void BtnGuardar_Click(object sender, RoutedEventArgs e)
+        private async void btnGuardar_Click(object sender, RoutedEventArgs e)
         {
+            // 1. Validaciones básicas de campos vacíos
+            if (string.IsNullOrWhiteSpace(txtCodigoBarras.Text) ||
+                string.IsNullOrWhiteSpace(txtDescripcion.Text) ||
+                cmbCategoria.SelectedItem == null)
+            {
+                MessageBox.Show("Por favor, complete los campos obligatorios.", "Advertencia", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            // 2. Validación de conversiones numéricas (precios)
+            if (!decimal.TryParse(txtPrecioCosto.Text, out decimal precioCosto) ||
+                !decimal.TryParse(txtPrecioVenta.Text, out decimal precioVenta))
+            {
+                MessageBox.Show("Los precios deben ser valores numéricos válidos.", "Error de formato", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
             try
             {
-                // Validar campos obligatorios
-                if (string.IsNullOrWhiteSpace(TxtCodigoBarras.Text) ||
-                    string.IsNullOrWhiteSpace(TxtDescripcion.Text) ||
-                    string.IsNullOrWhiteSpace(TxtPrecioVenta.Text))
+                // 3. Crear el objeto con la estructura que espera la API
+                var nuevoProducto = new
                 {
-                    MessageBox.Show("Por favor complete todos los campos obligatorios.", "Validación",
-                        MessageBoxButton.OK, MessageBoxImage.Warning);
-                    return;
-                }
-
-                // Crear/actualizar objeto del producto
-                var producto = new ProductoDTO
-                {
-                    IdProducto = _productoEnEdicion?.IdProducto ?? 0,  // Usar ID si está editando
-                    CodigoBarras = TxtCodigoBarras.Text.Trim(),
-                    Descripcion = TxtDescripcion.Text.Trim(),
-                    Categoria = TxtCategoria.Text.Trim(),
-                    Acabado = TxtAcabado.Text.Trim(),
-                    Tamanio = TxtTamanio.Text.Trim(),
-                    Stock = decimal.TryParse(TxtStock.Text, out var stock) ? stock : 0,
-                    PrecioCosto = decimal.TryParse(TxtPrecioCosto.Text, out var costo) ? costo : 0,
-                    PrecioVenta = decimal.Parse(TxtPrecioVenta.Text)
+                    CodigoBarras = txtCodigoBarras.Text,
+                    Descripcion = txtDescripcion.Text,
+                    Categoria = ((ComboBoxItem)cmbCategoria.SelectedItem).Content.ToString(),
+                    PrecioCosto = precioCosto,
+                    PrecioVenta = precioVenta
                 };
 
-                if (_productoEnEdicion == null)
+                string json = JsonSerializer.Serialize(nuevoProducto);
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+                using (var client = new HttpClient())
                 {
-                    // Crear nuevo producto
-                    var productoCreado = await _apiClient.PostAsync<ProductoDTO>("Productos", producto);
+                    // Recuerda verificar el puerto de tu API local
+                    client.BaseAddress = new Uri("https://localhost:XXXX/");
 
-                    MessageBox.Show($"Producto '{productoCreado.Descripcion}' creado exitosamente.",
-                        "Éxito", MessageBoxButton.OK, MessageBoxImage.Information);
-                    ProductoCreado = productoCreado;
+                    // 4. Ejecutar la petición POST hacia el endpoint de Productos
+                    HttpResponseMessage response = await client.PostAsync("api/productos", content);
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        MessageBox.Show("Producto registrado correctamente en el catálogo.", "Éxito", MessageBoxButton.OK, MessageBoxImage.Information);
+                        this.DialogResult = true; // Cierra la ventana indicando éxito
+                        this.Close();
+                    }
+                    else
+                    {
+                        string errorResponse = await response.Content.ReadAsStringAsync();
+                        MessageBox.Show($"Error al guardar el producto: {errorResponse}", "Error del Servidor", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
                 }
-                else
-                {
-                    // Actualizar producto existente
-                    var productoActualizado = await _apiClient.PutAsync<ProductoDTO>("Productos", _productoEnEdicion.IdProducto, producto);
-
-                    MessageBox.Show($"Producto '{productoActualizado.Descripcion}' actualizado exitosamente.",
-                        "Éxito", MessageBoxButton.OK, MessageBoxImage.Information);
-                    ProductoCreado = productoActualizado;
-                }
-
-                this.DialogResult = true;
-                this.Close();
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error: {ex.Message}", "Error al guardar producto",
-                    MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show($"Fallo de conexión: {ex.Message}", "Error Crítico", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
-        private void BtnCancelar_Click(object sender, RoutedEventArgs e)
+        private void btnCancelar_Click(object sender, RoutedEventArgs e)
         {
             this.DialogResult = false;
             this.Close();
-        }
-
-        // Validar solo números y decimales
-        private void NumeroInput_PreviewTextInput(object sender, TextCompositionEventArgs e)
-        {
-            e.Handled = !IsDecimalInput(e.Text);
-        }
-
-        private bool IsDecimalInput(string text)
-        {
-            return decimal.TryParse(text, out _) || text == "." || text == ",";
         }
     }
 }

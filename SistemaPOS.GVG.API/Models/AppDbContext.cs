@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SistemaPOS.API.Models;
+using SistemaPOS.GVG.API.Models;
 
 namespace SistemaPOS.API.Data
 {
@@ -16,6 +17,7 @@ namespace SistemaPOS.API.Data
         public DbSet<Venta> Ventas { get; set; }
         public DbSet<DetalleVenta> DetalleVentas { get; set; }
         public DbSet<Caja> Cajas { get; set; }
+        public DbSet<Usuario> Usuarios { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

@@ -4,7 +4,6 @@ using System.Windows;
 using System.Windows.Controls;
 using SistemaPOS.Desktop.Services;
 using SistemaPOS.Desktop.Models;
-using SistemaPOS.Desktop.Views.Dialogs;
 
 namespace SistemaPOS.Desktop.Views
 {

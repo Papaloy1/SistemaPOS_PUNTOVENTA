@@ -1,6 +1,6 @@
 using SistemaPOS.Desktop.Models;
 using SistemaPOS.Desktop.Services;
-using SistemaPOS.Desktop.Views.Dialogs;
+using SistemaPOS.GVG.Views;
 using System;
 using System.Collections.Generic;
 using System.Linq;
