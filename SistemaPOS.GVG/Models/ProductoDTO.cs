@@ -10,5 +10,6 @@
         public string Tamanio { get; set; }
         public decimal PrecioCosto { get; set; }
         public decimal PrecioVenta { get; set; }
+        public decimal Stock { get; set; }
     }
 }

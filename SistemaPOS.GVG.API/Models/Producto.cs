@@ -24,9 +24,15 @@ namespace SistemaPOS.API.Models
         public required string Tamanio { get; set; }
 
         [Column(TypeName = "decimal(18,2)")]
+        [Range(0, 999999.99, ErrorMessage = "El precio de costo debe estar entre 0 y 999999.99")]
         public decimal PrecioCosto { get; set; }
 
         [Column(TypeName = "decimal(18,2)")]
+        [Range(0, 999999.99, ErrorMessage = "El precio de venta debe estar entre 0 y 999999.99")]
         public decimal PrecioVenta { get; set; }
+
+        [Column(TypeName = "decimal(18,2)")]
+        [Range(0, 9999999.99, ErrorMessage = "El stock debe ser un número válido")]
+        public decimal Stock { get; set; } = 0;
     }
 }
